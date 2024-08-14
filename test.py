@@ -16,46 +16,8 @@ CUSTOM_PROMPT_FIELDS = {"max_tokens": 400}
 CUSTOM_FIELDS = {"stream": False}
 
 # Prompt template
-prompt_template = """You are tasked with extracting relevant information from a user's query for a financial search engine. Your goal is to identify search keywords and various filters such as time, country, industry, and company from the given query. This will help in creating a more targeted and efficient search.
-Here's the user's query:
-<user_query>
-{USER_QUERY}
-</user_query>
-Follow these steps to extract the necessary information:
-1. Search Keywords:
-- Identify the main topics or concepts in the query.
-- Extract key terms that are essential for the search.
-- Exclude common words, articles, and prepositions.
-2. Time Filter:
-- Look for any mentions of specific dates, years, or time periods (e.g., "last quarter", "2022", "past 5 years").
-- If a time frame is mentioned, include it in the time filter.
-3. Country Filter:
-- Identify any country names or regions mentioned in the query.
-- Include both full country names and their common abbreviations (e.g., "United States" or "US").
-4. Industry Filter:
-- Look for mentions of specific industries or sectors (e.g., "technology", "healthcare", "finance").
-- Include any industry-specific terms that could help narrow down the search.
-5. Company Filter:
-- Identify any specific company names mentioned in the query.
-- Include both full company names and their common abbreviations or stock symbols if present.
-Return only the output and nothing else in the following format:
-<extracted_info>
-<search_keywords>
-[List the main search keywords, separated by commas]
-</search_keywords>
-<time_filter>
-[Specify the time filter, if any. If none, do not return this field.]
-</time_filter>
-<country_filter>
-[List the countries or regions, if any. If none, do not return this field.]
-</country_filter>
-<industry_filter>
-[List the industries or sectors, if any. If none, do not return this field.]
-</industry_filter>
-<company_filter>
-[List the companies, if any. If none, do not return this field.]
-</company_filter>
-</extracted_info>"""
+prompt_template = """You are tasked with extracting relevant information from a user's query for a financial search engine. Your goal is to identify search keywords and various filters such as time, country, industry, and company from the given query. This will help in creating a more targeted and efficient search. Here's the user's query: <user_query> {USER_QUERY} </user_query> Follow these steps to extract the necessary information: 1. Search Keywords: - Identify the main topics or concepts in the query. - Extract key terms that are essential for the search. - Exclude common words, articles, and prepositions. 2. Time Filter: - Look for any mentions of specific dates, years, or time periods (e.g., 'last quarter', '2022', 'past 5 years'). - If a time frame is mentioned, include it in the time filter. 3. Country Filter: - Identify any country names or regions mentioned in the query. - Include both full country names and their common abbreviations (e.g., 'United States' or 'US'). 4. Industry Filter: - Look for mentions of specific industries or sectors (e.g., 'technology', 'healthcare', 'finance'). - Include any industry-specific terms that could help narrow down the search. 5. Company Filter: - Identify any specific company names mentioned in the query. - Include both full company names and their common abbreviations or stock symbols if present. Return only the output and nothing else in the following format: <extracted_info> <search_keywords> [List the main search keywords, separated by commas] </search_keywords> <time_filter> [Specify the time filter, if any. If none, do not return this field.] </time_filter> <country_filter> [List the countries or regions, if any. If none, do not return this field.] </country_filter> <industry_filter> [List the industries or sectors, if any. If none, do not return this field.] </industry_filter> <company_filter> [List the companies, if any. If none, do not return this field.] </company_filter> </extracted_info>"""
+
 
 # Companies and user queries
 companies = [
@@ -101,7 +63,12 @@ prompts = [
     prompt_template.replace("{USER_QUERY}", user_query) for user_query in user_queries
 ]
 
-
+# write prompts to a file
+with open("prompts.txt", "w") as f:
+    for prompt in prompts:
+        for prompt in prompts:
+            f.write(f"{prompt}\n")
+exit()
 # Function to send requests and gather stats
 def send_request(i):
     formatted_prompt = prompts[i % len(prompts)]
